@@ -1,6 +1,8 @@
-package com.example.kermis.attracties;
+package com.example.kermis.attracties.abstracteklassen;
 
+import com.example.kermis.attracties.*;
 import com.example.kermis.exceptions.AttractieBestaatAllException;
+import com.example.kermis.exceptions.AttractieLijstIsGevuldException;
 import com.example.kermis.kassa.GeldWeergave;
 import com.example.kermis.kassa.HoofdKassa;
 
@@ -12,28 +14,45 @@ public abstract class Attractie {
     private String naam;
     private int aantalTicketsVerkocht, prijs, totaalBedrag;
 
-    public static List<Attractie> attractieLijst = new ArrayList<>();
+    private static List<Attractie> attractieLijst = new ArrayList<>();
 
     public Attractie(String naam, int prijs) {
         this.naam = naam;
         this.prijs = prijs;
     }
 
-    public static void vulAttractieLijst(){
-        attractieLijst.add(new BotsAutos());
-        attractieLijst.add(new Spinner());
-        attractieLijst.add(new SpiegelPaleis());
-        attractieLijst.add(new Spookhuis());
-        attractieLijst.add(new Hawaii());
-        attractieLijst.add(new LadderKlimmen());
+    public static void vulAttractieLijst() throws AttractieLijstIsGevuldException {
+        if(attractieLijst.isEmpty()){
+            attractieLijst.add(new BotsAutos());
+            attractieLijst.add(new Spinner());
+            attractieLijst.add(new SpiegelPaleis());
+            attractieLijst.add(new Spookhuis());
+            attractieLijst.add(new Hawaii());
+            attractieLijst.add(new LadderKlimmen());
+        }else{
+            throw new AttractieLijstIsGevuldException();
+        }
+    }
+
+    public static List<Attractie> getAttractieLijst() {
+        return attractieLijst;
     }
 
     public abstract void gaInAttractie();
 
     public void koopKaart(){
+        printPrijs();
         HoofdKassa.getInstance().koopKaart(this.prijs);
         aantalTicketsVerkocht++;
         this.totaalBedrag += this.prijs;
+    }
+
+    private void printPrijs(){
+        System.out.println(this.getNaam().equals("spiegel paleis") | this.getNaam().equals("spookhuis")
+                | this.getNaam().equals("ladder klimmen") ? "het " + this + " kost $" +
+                this.getPrijs() + "\n" + "Je hebt een kaart gekocht\n" :
+                "de " + this + " kost $" + this.getPrijs() + "\n" +
+                        "Je hebt een kaart gekocht\n");
     }
 
     public void resetAlleWaardes(){

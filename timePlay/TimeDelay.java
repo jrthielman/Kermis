@@ -1,4 +1,4 @@
-package com.example.kermis.timePlay;
+package com.example.kermis.timeplay;
 
 public class TimeDelay {
 
