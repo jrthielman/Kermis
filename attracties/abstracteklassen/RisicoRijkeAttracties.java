@@ -6,7 +6,7 @@ import com.example.kermis.timeplay.TimeDelay;
 
 public abstract class RisicoRijkeAttracties extends Attractie {
 
-    private final int DRAAI_LIMIET_V1 = 1;
+    private final int DRAAI_LIMIET_V1 = 5;
     private final int DRAAI_LIMIET_V2 = 10;
 
     private int aantalKerenGedraaid;
