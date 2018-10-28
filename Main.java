@@ -1,10 +1,11 @@
 package com.example.kermis;
 
+import com.example.kermis.attracties.LadderKlimmen;
 import com.example.kermis.attracties.abstracteklassen.Attractie;
-import com.example.kermis.attracties.abstracteklassen.RisicoRijkeAttracties;
+import com.example.kermis.attracties.interfaces.GokAttractie;
 import com.example.kermis.exceptions.AttractieLijstIsGevuldException;
+import com.example.kermis.inspecteur.BelastingInspecteur;
 import com.example.kermis.kassa.HoofdKassa;
-import com.example.kermis.onderhoud.Inspecteur;
 import com.example.kermis.timeplay.TimeDelay;
 
 import java.util.InputMismatchException;
@@ -75,20 +76,26 @@ public class Main {
             case "p":
                 System.out.println();
                 for(Attractie attractie : Attractie.getAttractieLijst()){
-                    System.out.println(attractie + " totaal: $" + attractie.getTotaalBedrag());
+                    printMessage(attractie + " totaal: $" + attractie.getTotaalBedrag() +
+                            (isGokAttractie(attractie) ? " gereserveerd: $" + attractie.getGereserveerdeBelasting() : ""));
                 }
-                System.out.println("Totaal opgehaald: $" + HoofdKassa.getInstance().getTotaalGeldOpgehaald());
+                printMessage("Totaal opgehaald: $" + HoofdKassa.getInstance().getTotaleOmzet() +
+                "\nTotaal gereserveerd: $" + HoofdKassa.getInstance().getGereserveerdeBelasting());
                 return true;
             case "t":
                 System.out.println();
                 for(Attractie attractie : Attractie.getAttractieLijst()){
-                    System.out.println(attractie + " tickets: " + attractie.getAantalTicketsVerkocht());
+                    printMessage(attractie + " tickets: " + attractie.getAantalTicketsVerkocht());
                 }
-                System.out.println("Totaal tickets verkocht: " + HoofdKassa.getInstance().getTotaalVerkochteTickets());
+                printMessage("Totaal tickets verkocht: " + HoofdKassa.getInstance().getTotaalVerkochteTickets());
                 return true;
                 default:
                     return false;
         }
+    }
+
+    private boolean isGokAttractie(Attractie attractie){
+        return attractie instanceof GokAttractie;
     }
 
     private void printKeuzeMenu(int keuze){

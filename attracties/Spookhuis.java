@@ -8,12 +8,17 @@ import java.util.Scanner;
 
 public class Spookhuis extends Attractie {
 
-    public Spookhuis() {
-        super("spookhuis", 4500);
+    public Spookhuis(String naam, int prijs) {
+        super(naam, prijs);
     }
 
     @Override
     public void gaInAttractie() {
+        koopKaart();
+        draai();
+    }
+
+    private void draai(){
         int randomGetal = new Random().nextInt(5) + 1;
         int wachtTijd = 5;
         if (randomGetal < 2) {

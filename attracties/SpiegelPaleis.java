@@ -8,12 +8,17 @@ import java.util.Scanner;
 
 public class SpiegelPaleis extends Attractie {
 
-    public SpiegelPaleis() {
-        super("spiegel paleis", 5400);
+    public SpiegelPaleis(String naam, int prijs) {
+        super(naam, prijs);
     }
 
     @Override
     public void gaInAttractie() {
+        koopKaart();
+        draai();
+    }
+
+    private void draai(){
         int randomGetal = new Random().nextInt(5)+1;
         int wachtTijd = 5;
         if(randomGetal < 2) {

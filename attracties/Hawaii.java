@@ -1,22 +1,24 @@
 package com.example.kermis.attracties;
 
 import com.example.kermis.attracties.abstracteklassen.RisicoRijkeAttracties;
+import com.example.kermis.exceptions.OnderhoudAttractieException;
 import com.example.kermis.timeplay.TimeDelay;
 
 import java.util.Random;
 
 public class Hawaii extends RisicoRijkeAttracties {
 
-    public Hawaii() {
-        super("Hawaii", 5000, onderhoudVersie.V2);
+    public Hawaii(String naam, int prijs, onderhoudVersie onderhoudVersie) {
+        super(naam, prijs, onderhoudVersie);
     }
 
     @Override
     public void gaInAttractie() {
-        if(!opstellingsKeuring()){
+        try{
+            opstellingsKeuring();
             koopKaart();
             draai();
-        }else{
+        }catch(OnderhoudAttractieException oae){
             ondergaInspectie();
             koopKaart();
             draai();
@@ -37,7 +39,7 @@ public class Hawaii extends RisicoRijkeAttracties {
         }
         System.out.println("Je stapt in de " + this + " en het begint te bewegen\n");
         TimeDelay.seconds(3);
-        System.out.println("De " + this + " gaat steeds harder en je begint je longen uit je lijf te schreeuwen! Leuk!");
+        System.out.println("De " + this + " gaat steeds harder en je begint de longen uit je lijf te schreeuwen! Leuk!");
         TimeDelay.seconds(5);
     }
 

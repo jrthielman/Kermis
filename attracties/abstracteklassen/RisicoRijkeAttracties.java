@@ -1,6 +1,7 @@
 package com.example.kermis.attracties.abstracteklassen;
 
 import com.example.kermis.attracties.abstracteklassen.Attractie;
+import com.example.kermis.exceptions.OnderhoudAttractieException;
 import com.example.kermis.onderhoud.Inspecteur;
 import com.example.kermis.timeplay.TimeDelay;
 
@@ -21,21 +22,19 @@ public abstract class RisicoRijkeAttracties extends Attractie {
         this.versie = versie;
     }
 
-    protected boolean opstellingsKeuring(){
+    protected void opstellingsKeuring() throws OnderhoudAttractieException{
         switch(this.versie){
             case V1:
                 if(aantalKerenGedraaid < DRAAI_LIMIET_V1){
                     aantalKerenGedraaid++;
-                    return false;
                 }else{
-                     return true;
+                     throw new OnderhoudAttractieException();
                 }
             default:
                 if(aantalKerenGedraaid < DRAAI_LIMIET_V2){
                     aantalKerenGedraaid++;
-                    return false;
                 }else{
-                    return true;
+                    throw new OnderhoudAttractieException();
                 }
         }
     }

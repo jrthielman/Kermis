@@ -1,25 +1,35 @@
 package com.example.kermis.attracties;
 
 import com.example.kermis.attracties.abstracteklassen.RisicoRijkeAttracties;
+import com.example.kermis.attracties.interfaces.GokAttractie;
+import com.example.kermis.exceptions.OnderhoudAttractieException;
 import com.example.kermis.timeplay.TimeDelay;
 
 import java.util.Random;
 
-public class Spinner extends RisicoRijkeAttracties {
+public class Spinner extends RisicoRijkeAttracties implements GokAttractie {
 
-    public Spinner() {
-        super("Spinner", 6000,onderhoudVersie.V1);
+    public Spinner(String naam, int prijs, onderhoudVersie onderhoudVersie) {
+        super(naam, prijs, onderhoudVersie);
+    }
+
+    @Override
+    public double kansSpelBelastingBetalen() {
+        return Double.parseDouble(this.getPrijs()) * 0.3;
     }
 
     @Override
     public void gaInAttractie() {
-        if(!opstellingsKeuring()){
+        try{
+            opstellingsKeuring();
             koopKaart();
             draai();
-        }else{
+            inspectie();
+        }catch(OnderhoudAttractieException oae){
             ondergaInspectie();
             koopKaart();
             draai();
+            inspectie();
         }
     }
 
